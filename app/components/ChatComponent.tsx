@@ -13,11 +13,6 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ onClose, isWaitlistOpen }
       {/* Header */}
       <div className="bg-[#081427] p-4 flex justify-between items-center">
         <div className="flex items-center gap-3">
-          {/* <Image 
-            src="/assets/images/bot.png" 
-            alt="Chat Assistant" 
-            className="w-10 h-10 rounded-full border-2 border-[#FE6912]"
-          /> */}
            <Image 
             src="/assets/images/bot.png" 
             alt="Chat Assistant" 
@@ -38,11 +33,6 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ onClose, isWaitlistOpen }
       {/* Chat Messages Area */}
       <div className="h-[500px] overflow-y-auto p-4 bg-gray-50">
         <div className="flex gap-2 mb-4">
-          {/* <img 
-            src="/assets/images/bot.png" 
-            alt="Assistant" 
-            className="w-8 h-8 rounded-full border-2 border-[#FE6912]"
-          /> */}
           <Image 
             src="/assets/images/bot.png" 
             alt="Assistant" 
@@ -51,7 +41,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ onClose, isWaitlistOpen }
             className="rounded-full border-2 border-[#FE6912]"
           />
           <div className="bg-[#081427] text-white p-3 rounded-lg rounded-tl-none max-w-[80%]">
-            <p className="mb-3">Hello! I'm here to help you. Please select your role:</p>
+          <p className="mb-3">Hello! I&#39;m here to help you. Please select your role:</p>
             
             <div className="flex flex-col gap-3">
               <label className="flex items-center gap-2 cursor-pointer">
@@ -61,7 +51,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ onClose, isWaitlistOpen }
                   value="customer"
                   className="w-4 h-4 accent-[#FE6912]"
                 />
-                <span>I'm a mover</span>
+                <span>I&#39;m a mover</span>
               </label>
               
               <label className="flex items-center gap-2 cursor-pointer">
@@ -71,7 +61,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ onClose, isWaitlistOpen }
                   value="mover"
                   className="w-4 h-4 accent-[#FE6912]"
                 />
-                <span>I'm a business</span>
+                <span>I&#39;m a business</span>
               </label>
               
               <label className="flex items-center gap-2 cursor-pointer">
@@ -81,7 +71,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ onClose, isWaitlistOpen }
                   value="business"
                   className="w-4 h-4 accent-[#FE6912]"
                 />
-                <span>I'm a driver</span>
+                <span>I&#39;m a driver</span>
               </label>
             </div>
           </div>
