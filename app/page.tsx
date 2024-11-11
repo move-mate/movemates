@@ -22,17 +22,12 @@ export default function Home() {
             <div className="text-left">
               <h1 className="text-5xl font-bold mb-8 text-[#081427] relative">
                 Moving with<br />Complete Control
-                {/* <img 
-                  src="/assets/svg/underline.svg" 
-                  alt="Underline" 
-                  className="absolute -bottom-4 right-15 w-48"
-                /> */}
                 <Image 
                   src="/assets/svg/underline.svg" 
                   alt="Underline" 
                   className="absolute -bottom-4 right-15 w-48" 
-                  width={192} // Set a width (it will be scaled based on aspect ratio)
-                  height={48} // Set a height (it will be scaled based on aspect ratio)
+                  width={192}
+                  height={48}
                 />
               </h1>
               <p className="text-xl mb-12 text-black">
