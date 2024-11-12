@@ -70,10 +70,10 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full p-4 z-50">
-      <div className="relative max-w-7xl mx-auto bg-white rounded-xl shadow-xl flex min-h-[80vh] mt-8">
+      <div className="relative max-w-7xl mx-auto bg-white rounded-xl shadow-xl flex flex-col md:flex-row min-h-[80vh] mt-8">
         {/* Left Form Section */}
-        <div className="w-1/3 bg-[#081427] text-white p-8 rounded-l-xl">
-          <h2 className="text-3xl font-bold mb-8">Waiting List</h2>
+        <div className="w-full md:w-1/3 bg-[#081427] text-white p-6 md:p-8 rounded-t-xl md:rounded-l-xl md:rounded-tr-none">
+          <h2 className="text-3xl font-bold mb-6 md:mb-8">Waiting List</h2>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <h3 className="text-xl mb-4">Personal Information</h3>
@@ -86,7 +86,7 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
                 className="w-full p-3 rounded bg-white text-black"
                 required
               />
-              <div className="grid grid-cols-2 gap-4 mt-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                 <input
                   type="email"
                   name="email"
@@ -186,14 +186,14 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
         </div>
 
         {/* Right Features Section */}
-        <div className="w-2/3 p-8">
+        <div className="w-full md:w-2/3 p-6 md:p-8">
           <button
             onClick={onClose}
             className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
           >
             ×
           </button>
-          <div className="mb-8">
+          <div className="mb-6 md:mb-8">
             <h2 className="text-2xl font-bold text-center mb-4">
               {formData.type === 'customer' 
                 ? "Do you live in Gauteng, Durban, or Cape Town and want to be among the first to access our services?"

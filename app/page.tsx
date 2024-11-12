@@ -15,24 +15,23 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white text-black">
       <Navbar onWaitlistClick={() => setShowWaitlist(true)} showChat={showChat} />
-      
+
       {!showWaitlist ? (
         <main className="container mx-auto px-4 py-16">
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center min-h-[600px]">
+          <section className="grid grid-cols-1 sm:grid-cols-2 gap-8 items-center min-h-[600px]">
             <div className="text-left">
-              <h1 className="text-5xl font-bold mb-8 text-[#081427] relative">
+              <h1 className="text-4xl sm:text-5xl font-bold mb-8 text-[#081427] relative">
                 Moving with<br />Complete Control
                 <Image 
                   src="/assets/svg/underline.svg" 
                   alt="Underline" 
-                  className="absolute -bottom-4 right-15 w-48" 
+                  className="absolute -bottom-4 right-15 w-36 sm:w-48" 
                   width={192}
                   height={48}
                 />
               </h1>
-              <p className="text-xl mb-12 text-black">
-                Your last-mile moving solution, designed for seamless
-                relocations from a single item to an entire office.
+              <p className="text-lg sm:text-xl mb-12 text-black">
+                Your last-mile moving solution, designed for seamless relocations from a single item to an entire office.
                 Trusted, tech-enabled, and stress-free.
               </p>
               {!showChat && (
@@ -46,16 +45,14 @@ export default function Home() {
               )}
             </div>
             {!showChat && (
-              <div className="flex justify-center -mt-32">
+              <div className="flex justify-center mt-16 lg:mt-8">
                 <SkeletonPhone />
               </div>
             )}
           </section>
         </main>
       ) : (
-        <EnhancedWaitlistForm 
-          onClose={() => setShowWaitlist(false)} 
-        />
+        <EnhancedWaitlistForm onClose={() => setShowWaitlist(false)} />
       )}
 
       <div className="fixed bottom-4 right-4 z-10">
@@ -64,12 +61,12 @@ export default function Home() {
         ) : (
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => setShowChat(true)}>
             <div className="bg-white rounded-full shadow-lg px-4 py-2">
-              <p className="text-gray-700">Chat with<br /> our Assistant</p>
+              <p className="text-gray-700 text-sm sm:text-base">Chat with<br /> our Assistant</p>
             </div>
             <Image
               src="/assets/images/bot.png"
               alt="Chat Assistant"
-              className="w-12 h-12 rounded-full object-cover border-2 border-[#FE6912] shadow-lg animate-bounce"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-[#FE6912] shadow-lg animate-bounce"
               width={48}
               height={48}
             />
