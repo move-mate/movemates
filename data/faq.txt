@@ -1,0 +1,234 @@
+# MoveMates Customer FAQ
+
+## About MoveMates
+
+### What is MoveMates?
+MoveMates is a tech-enabled platform that connects individuals and businesses with vetted local drivers for moving and delivery services. Our platform simplifies the process of transporting goods, from small parcels to full household moves.
+
+### How does MoveMates work?
+1. Book through our website or mobile app
+2. Provide details about your move or delivery
+3. Get matched with qualified movers
+4. Track your items in real-time
+5. Complete the service and provide feedback
+
+### Where is MoveMates available?
+MoveMates operates in major cities across the country. Service availability can be checked by:
+- Visiting our location page
+- Entering your address in the booking system
+- Contacting customer support
+
+## Booking & Services
+
+### How do I book a service with MoveMates?
+You can book services through:
+- MoveMates mobile app
+- Official website
+- Customer service representative
+
+Required booking information includes:
+- Pickup and delivery locations
+- Item details
+- Preferred date and time
+- Special handling requirements
+
+### What types of services does MoveMates offer?
+1. Moving Services:
+   - Residential moves
+   - Office relocations
+   - Apartment moves
+   - Student moving
+
+2. Delivery Services:
+   - Furniture delivery
+   - Package delivery
+   - Store pickup and delivery
+   - Same-day delivery options
+
+3. Additional Services:
+   - Packing assistance
+   - Furniture assembly/disassembly
+   - Loading and unloading
+   - Storage solutions
+
+### What items can MoveMates transport?
+Acceptable items include:
+- Furniture and appliances
+- Boxes and containers
+- Electronics
+- Office equipment
+- Home goods
+
+Restricted items:
+- Hazardous materials
+- Illegal substances
+- Perishable goods
+- Extremely valuable items (art, jewelry)
+- Unpackaged items
+
+## Pricing & Payment
+
+### How is pricing determined?
+Pricing factors include:
+- Distance of move
+- Volume of items
+- Service type
+- Time of day/season
+- Additional services required
+- Location-specific factors
+
+### What payment methods are accepted?
+We accept:
+- Major credit/debit cards
+- Digital payment services
+- Corporate accounts (for businesses)
+- ACH transfers (for qualified customers)
+
+### Are there any additional fees?
+Standard fees are included in your quote. Potential additional charges:
+- Stairs/elevator fees
+- Long carry fees
+- Parking permits
+- Packing materials
+- Extended wait times
+- After-hours service
+
+## Insurance & Security
+
+### How are my items protected?
+Protection measures include:
+- Basic insurance coverage
+- Additional insurance options
+- Trained and vetted movers
+- Secure tracking system
+- Quality assurance protocols
+
+### What insurance options are available?
+1. Basic Coverage:
+   - Included with every move
+   - Coverage up to $X per item
+   - Basic liability protection
+
+2. Premium Protection:
+   - Additional coverage options
+   - Full value protection
+   - Specialized item coverage
+   - Custom insurance solutions
+
+## Scheduling & Changes
+
+### Can I modify my booking?
+Booking modifications:
+- Schedule changes
+- Service additions
+- Location updates
+- Item list modifications
+
+Modification policies:
+- Free changes 48+ hours before
+- Fee-based changes within 48 hours
+- Emergency modification options
+
+### What is the cancellation policy?
+Cancellation timeline:
+- Full refund: 48+ hours notice
+- Partial refund: 24-48 hours notice
+- Cancellation fee: <24 hours notice
+- Special circumstances considered
+
+## During Your Move
+
+### How does real-time tracking work?
+Tracking features:
+- Live GPS tracking
+- Status updates
+- Estimated arrival times
+- Direct communication with movers
+- Photo documentation options
+
+### What if there are issues during the move?
+Problem resolution process:
+1. Contact support immediately
+2. Document any damages
+3. File a claim if necessary
+4. Receive resolution updates
+5. Follow-up satisfaction check
+
+## Safety & Quality Assurance
+
+### How are MoveMates professionals vetted?
+Vetting process includes:
+- Background checks
+- Driving record verification
+- Skills assessment
+- Equipment inspection
+- Regular performance reviews
+- Customer feedback evaluation
+
+### What COVID-19 safety measures are in place?
+Safety protocols include:
+- Sanitized equipment
+- Masked movers
+- Contactless options
+- Health screening
+- Regular testing
+- Updated safety guidelines
+
+## Customer Support
+
+### How can I contact support?
+Support channels:
+- 24/7 in-app support
+- Phone support: [Number]
+- Email: support@movemates.com
+- Live chat
+- Emergency hotline
+
+### How do I provide feedback?
+Feedback options:
+- Post-service surveys
+- In-app ratings
+- Written reviews
+- Direct feedback to support
+- Social media channels
+
+## Business Services
+
+### What special services are available for businesses?
+Business solutions:
+- Corporate account management
+- Volume pricing
+- Dedicated support
+- Custom scheduling
+- Regular service arrangements
+- Integration options
+
+### Do you offer API integration?
+Integration capabilities:
+- REST API access
+- Webhook support
+- Custom development
+- Third-party integration
+- Documentation and support
+
+## Additional Information
+
+### What sets MoveMates apart?
+Key differentiators:
+- Tech-enabled platform
+- Vetted professionals
+- Real-time tracking
+- Transparent pricing
+- Quality assurance
+- Customer-first approach
+
+### How can I become a MoveMates driver?
+Driver requirements:
+- Valid driver's license
+- Clean background check
+- Reliable vehicle
+- Insurance coverage
+- Professional experience
+- Customer service skills
+
+Note: This FAQ is regularly updated to reflect current services and policies. Last updated: 11/12/2024
