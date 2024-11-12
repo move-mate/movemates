@@ -11,6 +11,7 @@ export interface EmbeddingDocument {
   
   export interface ChatRequest {
     query: string;
+    role: string;
   }
   
   export interface ChatResponse {

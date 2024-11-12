@@ -5,11 +5,11 @@ import path from "path";
 import { mistral } from "@ai-sdk/mistral";
 import { cosineSimilarity, embed, embedMany, generateText } from "ai";
 import { CachedData, EmbeddingDocument, ErrorResponse, ChatRequest,ChatResponse } from '@/app/types/chat';
-
-
+// const EMBEDDINGS_PATH_FILE ="data/cached_embeddings.json"
+// const RAG_FILE_PATH = "data/faq.txt"
 // Constants
-const EMBEDDINGS_PATH = path.join(process.cwd(), "data/cached_embeddings.json");
-const FILE_PATH = path.join(process.cwd(), "data/faq.txt");
+const EMBEDDINGS_PATH = path.join(process.cwd(), process.env.EMBEDDINGS_PATH_FILE as string);
+const FILE_PATH = path.join(process.cwd(), process.env.RAG_FILE_PATH as string);
 
 // Custom error class for better error handling
 class ChatError extends Error {
@@ -106,14 +106,15 @@ export async function POST(
 ): Promise<NextResponse<ChatResponse | ErrorResponse>> {
   try {
     const body = await request.json() as ChatRequest;
-    const { query } = body;
-
+    const { query, role } = body;
     if (!query?.trim()) {
       return NextResponse.json(
         { error: 'Query is required' },
         { status: 400 }
       );
     }
+
+    console.log(role)
 
     const db = await getEmbeddings();
 
@@ -134,40 +135,40 @@ export async function POST(
 
     const { text } = await generateText({
       model: mistral("open-mixtral-8x7b"),
-      prompt: `Context: ${context}
+      prompt: `You are MoveMates's friendly AI assistant, trained to help users with questions about moving services, whether they're movers, businesses, or drivers. Always engage in a warm, conversational manner while using the following context to inform your responses:
+
+Context: ${context}
 Question: ${query}
+Role: ${role}
 
-Instructions for response:
+Guidelines for your responses:
+1. Personality:
+   - empathetic, and approachable
+   - Use a conversational tone, not just factual statements
+   - Address the user's role (mover/business/driver) in your response when relevant
 
-1. Context Analysis:
-- First, determine if the question is directly answerable from the provided context
-- Identify relevant sections in the context that relate to the question
-- Check if any critical information is missing to provide a complete answer
+2. Structure:
+   - Provide information in a digestible, conversational way
 
-2. Response Guidelines:
-- Begin with a friendly, direct answer if the question is within context
-- Use natural, conversational language while maintaining professionalism
-- Include specific details from the context when available
-- Keep responses concise and focused on the main question
+3. Response Style:
+   - Keep responses under 3 sentences
+   - Be friendly but direct
+   - Break down complex information into simple, clear points
+   - use nextline and bullet points if you want to break up text
+   - Use everyday language instead of technical jargon
+   - Keep the friendly tone of MoveMates brand
+   
 
-3. Boundaries:
-- Only provide information explicitly stated in the context
-- If the question is partially answerable, only address the parts covered in the context
-- If the question is completely out of scope, respond with: "I apologize, but I don't have specific information about that in my current knowledge base. Would you like to know about [suggest related topic from context]?"
+4. Important Rules:
+   - Keep responses under 2 concise and short sentences
+   - If the information isn't in the context, be honest and say so
+   - Always stay relevant to the moving industry and MoveMates services
+   - Maintain a helpful, solution-oriented approach
+   - Focus on the user's specific role and their needs
 
-4. Format:
-- Structure longer responses with bullet points or short paragraphs
-- Include relevant quotes from the context when helpful
-- Use natural transitions between points
-
-5. Accuracy Check:
-- Verify that every piece of information in your response is from the context
-- Don't make assumptions or extrapolate beyond the given information
-- If specific numbers/prices/dates are mentioned in the context, use them exactly
-
+Remember: You are an informative chatbot that provide information based on what is asked
 Response:`,
     });
-    console.log(text);
     
     return NextResponse.json({ response: text });
     
