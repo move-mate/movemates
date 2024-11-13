@@ -1,18 +1,8 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { X } from 'lucide-react';
-
-interface Message {
-  id: string;
-  role: 'user' | 'bot';
-  content: string;
-  timestamp: Date;
-}
-
-interface ChatComponentProps {
-  onClose: () => void;
-  isWaitlistOpen?: boolean;
-}
+import { ChatComponentProps } from '../types/chat';
+import { Message } from '../types/chat';
 
 const ChatComponent: React.FC<ChatComponentProps> = ({ onClose, isWaitlistOpen }) => {
   const [messages, setMessages] = useState<Message[]>([{
