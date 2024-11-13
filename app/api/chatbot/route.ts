@@ -1,82 +1,44 @@
 // app/api/chat/route.ts
 import { NextResponse } from 'next/server';
-import fs from "fs";
-import path from "path";
+import { headers } from 'next/headers';
 import { mistral } from "@ai-sdk/mistral";
 import { cosineSimilarity, embed, embedMany, generateText } from "ai";
-import { CachedData, EmbeddingDocument, ErrorResponse, ChatRequest,ChatResponse } from '@/app/types/chat';
-import { headers } from 'next/headers';
+import { EmbeddingDocument } from '@/app/types/chat';
 
-const EMBEDDINGS_PATH = path.join(process.cwd(), process.env.EMBEDDINGS_PATH_FILE as string);
-// const FILE_PATH = path.join(process.cwd(), process.env.RAG_FILE_PATH as string);
+// In-memory cache (note: this will reset on each cold start)
+let embeddingsCache: {
+  data: EmbeddingDocument[] | null;
+  timestamp: number;
+} = {
+  data: null,
+  timestamp: 0
+};
 
-// Custom error class for better error handling
-class ChatError extends Error {
-  constructor(
-    message: string,
-    public statusCode: number = 500
-  ) {
-    super(message);
-    this.name = 'ChatError';
-  }
-}
+const CACHE_DURATION = 3600000; // 1 hour in milliseconds
 
-
-
-// Helper function to validate cache data
-function isCachedData(data: unknown): data is CachedData {
-  const cached = data as CachedData;
-  return (
-    typeof cached === 'object' &&
-    cached !== null &&
-    typeof cached.essayHash === 'string' &&
-    Array.isArray(cached.embeddings) &&
-    cached.embeddings.every(
-      (item): item is EmbeddingDocument =>
-        Array.isArray(item.embedding) &&
-        typeof item.value === 'string'
-    )
-  );
-}
-
-// Function to load or generate embeddings
 async function getEmbeddings(): Promise<EmbeddingDocument[]> {
+  try {
+    // Check cache first
+    const now = Date.now();
+    if (embeddingsCache.data && (now - embeddingsCache.timestamp) < CACHE_DURATION) {
+      return embeddingsCache.data;
+    }
 
-  const headersList = headers();
-    const host = (await headersList).get('host') || '';
+    // Get the FAQ content
+    const headersList = await headers();
+    const host = headersList.get('host') || '';
     const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
- 
-  const faqUrl = `${protocol}://${host}/assets/faq.txt`;
-  console.log(faqUrl);
-  
-  const response = await fetch(faqUrl);
+    const faqUrl = `${protocol}://${host}/assets/faq.txt`;
+    
+    const response = await fetch(faqUrl);
     if (!response.ok) {
       throw new Error('Failed to fetch FAQ content');
     }
     
-  const faqContent = await response.text();
-
-  try {
-    // Check if cached embeddings exist
-    if (fs.existsSync(EMBEDDINGS_PATH)) {
-      const rawData = fs.readFileSync(EMBEDDINGS_PATH, 'utf8');
-      const cachedData = JSON.parse(rawData);
-      
-      if (!isCachedData(cachedData)) {
-        throw new ChatError('Invalid cache data format', 500);
-      }
-
-      const essayContent = faqContent;
-      
-      // Verify if essay content matches the cached version
-      if (cachedData.essayHash === Buffer.from(essayContent).toString('base64')) {
-        return cachedData.embeddings;
-      }
-    }
-
-    // Generate new embeddings if cache doesn't exist or essay changed
-    const essay = faqContent
-    const chunks = essay
+    const faqContent = await response.text();
+    
+    // Generate embeddings
+    const chunks = faqContent
       .split(".")
       .map((chunk) => chunk.trim())
       .filter((chunk) => chunk.length > 0 && chunk !== "\n");
@@ -91,46 +53,31 @@ async function getEmbeddings(): Promise<EmbeddingDocument[]> {
       value: chunks[i],
     }));
 
-    // Cache the embeddings with essay hash
-    const cacheData: CachedData = {
-      essayHash: Buffer.from(essay).toString('base64'),
-      embeddings: db
+    // Update cache
+    embeddingsCache = {
+      data: db,
+      timestamp: now
     };
-    
-    // Ensure the directory exists
-    const dir = path.dirname(EMBEDDINGS_PATH);
-    if (!fs.existsSync(dir)){
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    
-    fs.writeFileSync(EMBEDDINGS_PATH, JSON.stringify(cacheData));
+
     return db;
   } catch (error) {
-    if (error instanceof ChatError) {
-      throw error;
-    }
-    throw new ChatError(
-      `Error loading/generating embeddings: ${error instanceof Error ? error.message : 'Unknown error'}`,
-      500
+    console.error('Error generating embeddings:', error);
+    throw new Error(
+      `Error generating embeddings: ${error instanceof Error ? error.message : 'Unknown error'}`
     );
   }
 }
 
-// Request handler
-export async function POST(
-  request: Request
-): Promise<NextResponse<ChatResponse | ErrorResponse>> {
+export async function POST(request: Request) {
   try {
-    const body = await request.json() as ChatRequest;
-    const { query, role } = body;
+    const { query, role } = await request.json();
+
     if (!query?.trim()) {
       return NextResponse.json(
         { error: 'Query is required' },
         { status: 400 }
       );
     }
-
-    console.log(role)
 
     const db = await getEmbeddings();
 
@@ -151,52 +98,29 @@ export async function POST(
 
     const { text } = await generateText({
       model: mistral("open-mixtral-8x7b"),
-      prompt: `You are MoveMates's friendly AI assistant, trained to help users with questions about moving services, whether they're movers, businesses, or drivers. Always engage in a warm, conversational manner while using the following context to inform your responses:
+      prompt: `You are MoveMates's friendly AI assistant, trained to help users with questions about moving services. ${role ? `You are speaking to a ${role}.` : ''}
 
 Context: ${context}
 Question: ${query}
-Role: ${role}
 
 Guidelines for your responses:
 1. Personality:
-   - empathetic, and approachable
+   - Be friendly, empathetic, and approachable
    - Use a conversational tone, not just factual statements
-   - Address the user's role (mover/business/driver) in your response when relevant
+   - Address the user's role in your response when relevant
 
 2. Structure:
+   - Start with a brief acknowledgment of their question
    - Provide information in a digestible, conversational way
+   - End with a supportive statement or follow-up question when appropriate
 
-3. Response Style:
-   - Keep responses under 3 sentences
-   - Be friendly but direct
-   - Break down complex information into simple, clear points
-   - use nextline and bullet points if you want to break up text
-   - Use everyday language instead of technical jargon
-   - Keep the friendly tone of MoveMates brand
-   
-
-4. Important Rules:
-   - If the information isn't in the context, be honest and say so
-   - Always stay relevant to the moving industry and MoveMates services
-   - Maintain a helpful, solution-oriented approach
-   - Focus on the user's specific role and their needs
-
-Remember: You are an informative chatbot that provide information based on what is asked
 Response:`,
     });
-    
+
     return NextResponse.json({ response: text });
     
   } catch (error) {
     console.error('Error in chat endpoint:', error);
-    
-    if (error instanceof ChatError) {
-      return NextResponse.json(
-        { error: error.message },
-        { status: error.statusCode }
-      );
-    }
-
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

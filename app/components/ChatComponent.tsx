@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { X } from 'lucide-react';
 import { ChatComponentProps } from '../types/chat';
 import { Message } from '../types/chat';
+import { addConversationalElements, enhanceContextForRole, getConversationStage } from '@/libs/chatbot';
 
 const ChatComponent: React.FC<ChatComponentProps> = ({ onClose, isWaitlistOpen }) => {
   const [messages, setMessages] = useState<Message[]>([{
@@ -84,7 +85,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ onClose, isWaitlistOpen }
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          query: inputValue.trim(),
+          query: addConversationalElements(inputValue.trim()+enhanceContextForRole(selectedRole as string),getConversationStage(messages)),
           role: selectedRole
         })
       });
