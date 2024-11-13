@@ -5,11 +5,10 @@ import path from "path";
 import { mistral } from "@ai-sdk/mistral";
 import { cosineSimilarity, embed, embedMany, generateText } from "ai";
 import { CachedData, EmbeddingDocument, ErrorResponse, ChatRequest,ChatResponse } from '@/app/types/chat';
-// const EMBEDDINGS_PATH_FILE ="data/cached_embeddings.json"
-// const RAG_FILE_PATH = "data/faq.txt"
-// Constants
+import { headers } from 'next/headers';
+
 const EMBEDDINGS_PATH = path.join(process.cwd(), process.env.EMBEDDINGS_PATH_FILE as string);
-const FILE_PATH = path.join(process.cwd(), process.env.RAG_FILE_PATH as string);
+// const FILE_PATH = path.join(process.cwd(), process.env.RAG_FILE_PATH as string);
 
 // Custom error class for better error handling
 class ChatError extends Error {
@@ -21,6 +20,8 @@ class ChatError extends Error {
     this.name = 'ChatError';
   }
 }
+
+
 
 // Helper function to validate cache data
 function isCachedData(data: unknown): data is CachedData {
@@ -40,6 +41,21 @@ function isCachedData(data: unknown): data is CachedData {
 
 // Function to load or generate embeddings
 async function getEmbeddings(): Promise<EmbeddingDocument[]> {
+
+  const headersList = headers();
+    const host = (await headersList).get('host') || '';
+    const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+ 
+  const faqUrl = `${protocol}://${host}/assets/faq.txt`;
+  console.log(faqUrl);
+  
+  const response = await fetch(faqUrl);
+    if (!response.ok) {
+      throw new Error('Failed to fetch FAQ content');
+    }
+    
+  const faqContent = await response.text();
+
   try {
     // Check if cached embeddings exist
     if (fs.existsSync(EMBEDDINGS_PATH)) {
@@ -50,7 +66,7 @@ async function getEmbeddings(): Promise<EmbeddingDocument[]> {
         throw new ChatError('Invalid cache data format', 500);
       }
 
-      const essayContent = fs.readFileSync(FILE_PATH, 'utf8');
+      const essayContent = faqContent;
       
       // Verify if essay content matches the cached version
       if (cachedData.essayHash === Buffer.from(essayContent).toString('base64')) {
@@ -59,7 +75,7 @@ async function getEmbeddings(): Promise<EmbeddingDocument[]> {
     }
 
     // Generate new embeddings if cache doesn't exist or essay changed
-    const essay = fs.readFileSync(FILE_PATH, "utf8");
+    const essay = faqContent
     const chunks = essay
       .split(".")
       .map((chunk) => chunk.trim())
@@ -160,7 +176,6 @@ Guidelines for your responses:
    
 
 4. Important Rules:
-   - Keep responses under 2 concise and short sentences
    - If the information isn't in the context, be honest and say so
    - Always stay relevant to the moving industry and MoveMates services
    - Maintain a helpful, solution-oriented approach
