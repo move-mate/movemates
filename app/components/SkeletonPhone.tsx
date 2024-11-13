@@ -30,8 +30,7 @@ const SkeletonPhone = () => {
         className={`absolute inset-0 w-full h-full object-cover rounded-[40px] transition-opacity duration-500 ${
           showImage ? 'opacity-100' : 'opacity-0'
         }`}
-        width={300}
-        height={630}
+        fill
       />
       
       <div className={`absolute inset-0 transition-opacity duration-500 ${
