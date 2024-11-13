@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 
 const SkeletonPhone = () => {
   const [showImage, setShowImage] = useState(false);
@@ -24,14 +23,12 @@ const SkeletonPhone = () => {
 
   return (
     <div className="relative w-[300px] h-[630px]">
-      <Image
+      <img 
         src="/assets/svg/app-driver.svg"
         alt="Phone Interface"
         className={`absolute inset-0 w-full h-full object-cover rounded-[40px] transition-opacity duration-500 ${
           showImage ? 'opacity-100' : 'opacity-0'
         }`}
-        width={300}
-        height={630}
       />
       
       <div className={`absolute inset-0 transition-opacity duration-500 ${
