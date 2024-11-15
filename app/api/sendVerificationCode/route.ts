@@ -1,40 +1,71 @@
-// app/api/sendVerificationCode/route
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 import { generateVerificationCode } from '@/libs/codeUtils';
 import { storeVerificationCode } from '@/libs/waitlist';
+import { findUserByEmailOrPhone } from '@/libs/waitlist';
+import { setupDatabase } from '@/db/setup';
 // import { sendVerificationEmail } from '@/libs/sendEmail';
 // import { sendSMS } from '@/libs/sendSms';
 
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    const { email, phone }: { email?: string; phone?: string } = req.body;
-
-    if (!email && !phone) {
-      return res.status(400).json({ error: 'Please provide either email or phone.' });
-    }
-
-    const verificationCode = generateVerificationCode();
-
-    // Store the verification code temporarily (you may use Redis or your DB)
-    await storeVerificationCode(verificationCode);
-
+export async function POST(req: Request) {
+    
     try {
+        await setupDatabase();
+        const { email, phone } = await req.json();
+
+        // Validate that at least one of email or phone is provided
+        if (!email && !phone) {
+            return new NextResponse(
+                JSON.stringify({ error: 'Please provide either email or phone.' }),
+                { status: 400 }
+            );
+        }
+        // Check if the user already exists
+        const userExists = await findUserByEmailOrPhone(email, phone);
+
+        if (userExists) {
+            return new NextResponse(
+                JSON.stringify({ error: 'User already exists.' }),
+                { status: 400 }
+            );
+        }
+
+        // Generate the verification code
+        const verificationCode = generateVerificationCode();
+
+
+        // Store the verification code temporarily (you may use Redis or your DB)
+        await storeVerificationCode(verificationCode);
+
+        // Uncomment and use your actual email or SMS service to send the verification code
         // if (email) {
-        //     // Send the code via email using SendGrid
         //     await sendVerificationEmail(email, verificationCode);
         // } else if (phone) {
-        //     // Send the code via SMS using Twilio
         //     await sendSMS(phone, verificationCode);
         // }
-        console.log(`Code: ${verificationCode}`);
 
-        res.status(200).json({ message: 'Verification code sent successfully.' });
+        console.log(`Verification Code: ${verificationCode}`);
+
+        // Return success response
+        return new NextResponse(
+            JSON.stringify({ message: 'Verification code sent successfully!' }),
+            { status: 200 }
+        );  
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Failed to send verification code.' });
+        console.error('Error sending verification code:', error);
+        
+        // Return error response in case of failure
+        return new NextResponse(
+            JSON.stringify({ error: 'Failed to send verification code.' }),
+            { status: 500 }
+        );
     }
-  } else {
-    res.status(405).json({ error: 'Method Not Allowed' });
-  }
+}
+
+// Handle GET requests (Method Not Allowed for this route)
+export async function GET() {
+    return new NextResponse(
+        JSON.stringify({ error: 'Method Not Allowed' }),
+        { status: 405 }
+    );
 }
