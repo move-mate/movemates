@@ -36,15 +36,12 @@ function App() {
             <div className="text-left mt-4 md:mt-0">
               <h1 className="text-4xl md:text-5xl font-bold mb-6 md:mb-8 text-[#081427] relative">
                 Moving with<br />Complete Control
-                {/* <img 
-                  src="/assets/svg/underline.svg" 
-                  alt="" 
-                  className="absolute -bottom-4 right-15 w-36 md:w-48"
-                /> */}
                 <Image 
                   src="/assets/svg/underline.svg" 
-                  alt="" 
+                  alt="Underline" 
                   className="absolute -bottom-4 right-15 w-36 md:w-48"
+                  width={144} 
+                  height={36}
                 />
               </h1>
               <p className="text-lg md:text-xl mb-8 md:mb-12 text-black">
@@ -89,7 +86,9 @@ function App() {
             <Image 
               src="/assets/images/bot.png" 
               alt="Chat Assistant" 
-              className="w-12 h-12 rounded-full object-cover border-2 border-[#FE6912] shadow-lg animate-bounce"
+              className="rounded-full object-cover border-2 border-[#FE6912] shadow-lg animate-bounce"
+              width={48}  // Assuming 3rem (48px) for width
+              height={48} // Assuming 3rem (48px) for height
             />
           </div>
         )}
