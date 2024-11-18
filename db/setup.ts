@@ -13,15 +13,6 @@ export const getPool = (): Pool => {
   return pool;
 };
 
-// export const getPool = (): Pool => {
-//   if (!pool) {
-//     pool = new Pool({
-//       connectionString: process.env.DATABASE_URL,
-//       ssl: { rejectUnauthorized: false }
-//     });
-//   }
-//   return pool;
-// };
 
 export const setupDatabase = async (): Promise<void> => {
   const pool = getPool();
