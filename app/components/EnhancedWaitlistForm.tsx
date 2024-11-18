@@ -30,7 +30,7 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
     e.preventDefault();
     setError('');
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sendVerificationCode`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/waitlist`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
