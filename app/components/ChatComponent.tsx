@@ -74,6 +74,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ onClose, isWaitlistOpen }
 
     document.addEventListener('keypress', handleKeyPress);
     return () => document.removeEventListener('keypress', handleKeyPress);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue]);
 
   const handleSubmit = async (e: React.FormEvent) => {

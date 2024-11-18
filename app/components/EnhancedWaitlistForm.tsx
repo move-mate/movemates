@@ -55,7 +55,7 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
         <div className="bg-white rounded-xl shadow-xl p-8 max-w-md text-center">
           <h2 className="text-2xl font-bold mb-4">Thank you for joining the waitlist!</h2>
           <p className="text-gray-700 mb-4">
-            We have received your information. We'll be in touch soon with the latest updates.
+            We have received your information. We`ll be in touch soon with the latest updates.
           </p>
           <button
             onClick={onClose}

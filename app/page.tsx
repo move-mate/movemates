@@ -1,10 +1,11 @@
 'use client'
 import { useState } from 'react';
-import { ChevronRight } from 'lucide-react';
 import SkeletonPhone from './components/SkeletonPhone';
 import EnhancedWaitlistForm from './components/EnhancedWaitlistForm';
 import Navbar from './components/Navbar';
 import ChatComponent from './components/ChatComponent';
+import Image from 'next/image';
+
 
 function App() {
   const [showWaitlist, setShowWaitlist] = useState(false);
@@ -35,7 +36,12 @@ function App() {
             <div className="text-left mt-4 md:mt-0">
               <h1 className="text-4xl md:text-5xl font-bold mb-6 md:mb-8 text-[#081427] relative">
                 Moving with<br />Complete Control
-                <img 
+                {/* <img 
+                  src="/assets/svg/underline.svg" 
+                  alt="" 
+                  className="absolute -bottom-4 right-15 w-36 md:w-48"
+                /> */}
+                <Image 
                   src="/assets/svg/underline.svg" 
                   alt="" 
                   className="absolute -bottom-4 right-15 w-36 md:w-48"
@@ -80,7 +86,7 @@ function App() {
             <div className="bg-white rounded-full shadow-lg px-4 py-2">
               <p className="text-gray-700">Chat with<br/> our Assistant</p>
             </div>
-            <img 
+            <Image 
               src="/assets/images/bot.png" 
               alt="Chat Assistant" 
               className="w-12 h-12 rounded-full object-cover border-2 border-[#FE6912] shadow-lg animate-bounce"
