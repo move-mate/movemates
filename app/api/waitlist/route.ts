@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { addToWaitlist } from '@/libs/waitlist';
 
 // Manual validation function (since Express-validator is not available)
-const validateWaitlist = (body: { name: string; email: string; type: string; province: string; city: string }) => {
+const validateWaitlist = (body: { name: string; email: string; phone: string; type: string; province: string; city: string }) => {
   const errors: string[] = [];
   
   if (!body.name.trim()) {
@@ -11,6 +11,9 @@ const validateWaitlist = (body: { name: string; email: string; type: string; pro
   }
   if (!body.email || !/\S+@\S+\.\S+/.test(body.email)) {
     errors.push('Valid email is required');
+  }
+  if (!body.phone || !/^\d{10,15}$/.test(body.phone)) {
+    errors.push('Valid phone number is required (10-15 digits)');
   }
   if (!['customer', 'driver', 'business'].includes(body.type)) {
     errors.push('Invalid user type');
