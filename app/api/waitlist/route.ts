@@ -1,4 +1,3 @@
-// app/api/waitlist/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { addToWaitlist } from '@/libs/waitlist';
 
