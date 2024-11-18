@@ -1,0 +1,96 @@
+# MoveMates Service Guide
+
+## Service Overview
+Movemates is coming soon
+MoveMates provides on-demand moving and delivery services through a tech-enabled platform. Our network will connect customers with vetted local drivers for various transportation needs.
+
+## Core Services
+- **Moving Services**: Residential moves, office relocations, apartment moves, student moving
+- **Delivery Services**: Furniture delivery, package delivery, store pickup, same-day delivery
+- **Additional Services**: Packing, furniture assembly/disassembly, loading/unloading, storage solutions
+
+## Booking Process
+1. Access platform via mobile app or website
+2. Submit move details (locations, items, timing)
+3. Get matched with qualified movers
+4. Track shipment real-time
+5. Complete service and review
+
+## Item Guidelines
+Accepted:
+- Furniture
+- Appliances
+- Electronics
+- Office equipment
+- Household goods
+
+Prohibited:
+- Perishables
+- Hazardous materials
+- Illegal items
+
+## Pricing Structure
+Factors:
+- Distance
+- Item volume
+- Service type
+- Location
+- Additional services
+
+Payment Options:
+- Credit/debit cards
+- Digital payments
+- Corporate accounts
+
+## Insurance Coverage
+Standard Protection:
+- Basic coverage included
+- Per-item coverage limit
+- Basic liability protection
+
+Premium Protection:
+- Enhanced coverage options
+- Full value protection
+- Special item coverage
+
+## Booking Management
+Modifications:
+- Schedule changes (free 48+ hours before)
+- Service adjustments
+- Location updates
+- Item list changes
+
+## Quality Assurance
+Driver Requirements:
+- Valid license
+- Clean background
+- Vehicle requirements
+- Insurance coverage
+- Professional experience
+- Service training
+
+## Support Services
+Channels:
+- 24/7 in-app support
+- Phone assistance
+- Email support
+- Live chat
+- Emergency hotline
+
+## Business Solutions
+Enterprise Features:
+- Corporate account management
+- Volume pricing
+- Priority support
+- Custom scheduling
+- API integration
+- Regular service arrangements
+
+## Platform Security
+Safety Measures:
+- Real-time tracking
+- Vetted professionals
+- Quality assurance protocols
+- Secure payment processing
+- Insurance coverage
+- Emergency support
