@@ -32,6 +32,7 @@ export const setupDatabase = async (): Promise<void> => {
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         email VARCHAR(255) UNIQUE NOT NULL,
+        phone VARCHAR(10) UNIQUE NOT NULL,
         type VARCHAR(50) CHECK (type IN ('customer', 'driver', 'business')) NOT NULL,
         province VARCHAR(100) NOT NULL,
         city VARCHAR(100) NOT NULL,

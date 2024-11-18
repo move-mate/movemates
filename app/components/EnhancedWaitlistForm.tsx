@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import CustomerFeatures from '@/app/components/features/CustomerFeatures';
-import DriverFeatures from '@/app/components/features/DriverFeatures';
-import BusinessFeatures from '@/app/components/features/BusinessFeatures';
+import CustomerFeatures from './features/CustomerFeatures';
+import DriverFeatures from './features/DriverFeatures';
+import BusinessFeatures from './features/BusinessFeatures';
 
 interface EnhancedWaitlistFormProps {
   onClose: () => void;
@@ -30,7 +30,7 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
     e.preventDefault();
     setError('');
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/waitlist`, {
+      const response = await fetch('http://localhost:3000/api/waitlist', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
         <div className="bg-white rounded-xl shadow-xl p-8 max-w-md text-center">
           <h2 className="text-2xl font-bold mb-4">Thank you for joining the waitlist!</h2>
           <p className="text-gray-700 mb-4">
-            We have received your information. We’ll be in touch soon with the latest updates.
+            We have received your information. We'll be in touch soon with the latest updates.
           </p>
           <button
             onClick={onClose}
@@ -71,9 +71,9 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full p-4 z-50">
       <div className="relative max-w-7xl mx-auto bg-white rounded-xl shadow-xl flex flex-col md:flex-row min-h-[80vh] mt-8">
-        {/* Left Form Section */}
-        <div className="w-full md:w-1/3 bg-[#081427] text-white p-6 md:p-8 rounded-t-xl md:rounded-l-xl md:rounded-tr-none">
-          <h2 className="text-3xl font-bold mb-6 md:mb-8">Waiting List</h2>
+        {/* Form Section */}
+        <div className="w-full md:w-1/3 bg-[#081427] text-white p-8 rounded-t-xl md:rounded-l-xl md:rounded-tr-none">
+          <h2 className="text-3xl font-bold mb-8">Waiting List</h2>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <h3 className="text-xl mb-4">Personal Information</h3>
@@ -86,7 +86,7 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
                 className="w-full p-3 rounded bg-white text-black"
                 required
               />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                 <input
                   type="email"
                   name="email"
@@ -110,7 +110,7 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
 
             <div>
               <h3 className="text-xl mb-4">Join as</h3>
-              <div className="space-x-4">
+              <div className="flex flex-wrap gap-4">
                 <label className="inline-flex items-center">
                   <input
                     type="radio"
@@ -185,15 +185,15 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
           </form>
         </div>
 
-        {/* Right Features Section */}
-        <div className="w-full md:w-2/3 p-6 md:p-8">
+        {/* Features Section */}
+        <div className="w-full md:w-2/3 p-8">
           <button
             onClick={onClose}
             className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
           >
             ×
           </button>
-          <div className="mb-6 md:mb-8">
+          <div className="mb-8">
             <h2 className="text-2xl font-bold text-center mb-4">
               {formData.type === 'customer' 
                 ? "Do you live in Gauteng, Durban, or Cape Town and want to be among the first to access our services?"
@@ -206,13 +206,15 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
             </p>
           </div>
           
-          {formData.type === 'customer' ? (
-            <CustomerFeatures />
-          ) : formData.type === 'driver' ? (
-            <DriverFeatures />
-          ) : (
-            <BusinessFeatures />
-          )}
+          <div className="overflow-x-auto">
+            {formData.type === 'customer' ? (
+              <CustomerFeatures />
+            ) : formData.type === 'driver' ? (
+              <DriverFeatures />
+            ) : (
+              <BusinessFeatures />
+            )}
+          </div>
         </div>
       </div>
     </div>
