@@ -1,204 +1,96 @@
-# MoveMates Customer FAQ
+# MoveMates Service Guide
 
-## About MoveMates
+## Service Overview
+Movemates is coming soon
+MoveMates provides on-demand moving and delivery services through a tech-enabled platform. Our network will connect customers with vetted local drivers for various transportation needs.
 
-### What is MoveMates?
-MoveMates is a tech-enabled platform that connects individuals and businesses with vetted local drivers for moving and delivery services. Our platform simplifies the process of transporting goods, from small parcels to full household moves.
+## Core Services
+- **Moving Services**: Residential moves, office relocations, apartment moves, student moving
+- **Delivery Services**: Furniture delivery, package delivery, store pickup, same-day delivery
+- **Additional Services**: Packing, furniture assembly/disassembly, loading/unloading, storage solutions
 
-### How does MoveMates work?
-1. Book through our website or mobile app
-2. Provide details about your move or delivery
+## Booking Process
+1. Access platform via mobile app or website
+2. Submit move details (locations, items, timing)
 3. Get matched with qualified movers
-4. Track your items in real-time
-5. Complete the service and provide feedback
+4. Track shipment real-time
+5. Complete service and review
 
-### Where is MoveMates available?
-MoveMates operates in major cities across the country. Service availability can be checked by:
-- Visiting our location page
-- Entering your address in the booking system
-- Contacting customer support
-
-## Booking & Services
-
-### How do I book a service with MoveMates?
-You can book services through:
-- MoveMates mobile app
-- Official website
-- Customer service representative
-
-Required booking information includes:
-- Pickup and delivery locations
-- Item details
-- Preferred date and time
-- Special handling requirements
-
-### What types of services does MoveMates offer?
-1. Moving Services:
-   - Residential moves
-   - Office relocations
-   - Apartment moves
-   - Student moving
-
-2. Delivery Services:
-   - Furniture delivery
-   - Package delivery
-   - Store pickup and delivery
-   - Same-day delivery options
-
-3. Additional Services:
-   - Packing assistance
-   - Furniture assembly/disassembly
-   - Loading and unloading
-   - Storage solutions
-
-### What items can MoveMates transport?
-Acceptable items include:
-- Furniture and appliances
+## Item Guidelines
+Accepted:
+- Furniture
+- Appliances
 - Electronics
 - Office equipment
-- Home goods
+- Household goods
 
-Restricted items:
+Prohibited:
+- Perishables
+- Hazardous materials
+- Illegal items
 
-- Perishable goods
-- Extremely valuable items (art, jewelry)
-- Unpackaged items
-
-## Pricing & Payment
-
-### How is pricing determined?
-Pricing factors include:
-- Distance of move
-- Volume of items
+## Pricing Structure
+Factors:
+- Distance
+- Item volume
 - Service type
-- Location-specific factors
+- Location
+- Additional services
 
-### What payment methods are accepted?
-We accept:
-- Major credit/debit cards
-- Digital payment services
-- Corporate accounts (for businesses)
+Payment Options:
+- Credit/debit cards
+- Digital payments
+- Corporate accounts
 
-### Are there any additional fees?
-Standard fees are included in your quote. Potential additional charges:
+## Insurance Coverage
+Standard Protection:
+- Basic coverage included
+- Per-item coverage limit
+- Basic liability protection
 
-- Parking permits
-- Extended wait times
+Premium Protection:
+- Enhanced coverage options
+- Full value protection
+- Special item coverage
 
-
-## Insurance & Security
-
-### How are my items protected?
-Protection measures include:
-- Basic insurance coverage
-- Additional insurance options
-- Trained and vetted movers
-- Secure tracking system
-- Quality assurance protocols
-
-### What insurance options are available?
-1. Basic Coverage:
-   - Included with every move
-   - Coverage up to RX per item
-   - Basic liability protection
-
-2. Premium Protection:
-   - Additional coverage options
-   - Full value protection
-   - Specialized item coverage
-
-## Scheduling & Changes
-
-### Can I modify my booking?
-Booking modifications:
-- Schedule changes
-- Service additions
+## Booking Management
+Modifications:
+- Schedule changes (free 48+ hours before)
+- Service adjustments
 - Location updates
-- Item list modifications
+- Item list changes
 
-Modification policies:
-- Free changes 48+ hours before
-- Fee-based changes within 24 hours
-- Emergency modification options
+## Quality Assurance
+Driver Requirements:
+- Valid license
+- Clean background
+- Vehicle requirements
+- Insurance coverage
+- Professional experience
+- Service training
 
-### What is the cancellation policy?
-Cancellation timeline:
-- Special circumstances considered
-
-## During Your Move
-
-### How does real-time tracking work?
-Tracking features:
-- Live GPS tracking
-- Status updates
-- Estimated arrival times
-- Direct communication with movers
-
-### What if there are issues during the move?
-Problem resolution process:
-- Contact support immediately
-- Follow-up satisfaction check
-
-## Safety & Quality Assurance
-
-### How are MoveMates professionals vetted?
-Vetting process includes:
-- Background checks
-- Driving record verification
-- Skills assessment
-- Equipment inspection
-- Regular performance reviews
-- Customer feedback evaluation
-
-
-## Customer Support
-
-### How can I contact support?
-Support channels:
+## Support Services
+Channels:
 - 24/7 in-app support
-- Phone support
-- Email: 
+- Phone assistance
+- Email support
 - Live chat
 - Emergency hotline
 
-### How do I provide feedback?
-Feedback options:
-- In-app ratings
-- Written reviews
-- Social media channels
-
-## Business Services
-
-### What special services are available for businesses?
-Business solutions:
+## Business Solutions
+Enterprise Features:
 - Corporate account management
-- Bulk pricing
-- Dedicated support
+- Volume pricing
+- Priority support
 - Custom scheduling
+- API integration
 - Regular service arrangements
-- Integration options
 
-### Do you offer API integration?
-Integration capabilities:
-- REST API access
-- Documentation and support
-
-## Additional Information
-
-### What sets MoveMates apart?
-Key differentiators:
-
-
-- Customer-first approach
-- Growth-Orientated
-- Game-Changer
-
-### How can I become a MoveMates driver?
-Driver requirements:
-- Valid driver's license
-- Clean background check
-- Reliable vehicle
+## Platform Security
+Safety Measures:
+- Real-time tracking
+- Vetted professionals
+- Quality assurance protocols
+- Secure payment processing
 - Insurance coverage
-- Professional experience
-- Customer service skills
-Note: This FAQ is regularly updated to reflect current services and policies. Last updated: 11/12/2024
+- Emergency support

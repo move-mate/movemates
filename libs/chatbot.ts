@@ -37,5 +37,5 @@ export function addConversationalElements(response: string, stage:'initial' | 'e
     const enhancements = stageEnhancements[stage] || stageEnhancements.initial;
     const randomEnhancement = enhancements[Math.floor(Math.random() * enhancements.length)];
     
-    return `${randomEnhancement} ${response}`;
+    return `Query: ${response} Enhancement: ${randomEnhancement}`;
   }

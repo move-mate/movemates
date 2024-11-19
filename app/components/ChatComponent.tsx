@@ -3,7 +3,20 @@ import Image from 'next/image';
 import { X } from 'lucide-react';
 import { ChatComponentProps } from '../types/chat';
 import { Message } from '../types/chat';
-import { addConversationalElements, getConversationStage } from '@/libs/chatbot';
+import { addConversationalElements, enhanceContextForRole, getConversationStage } from '@/libs/chatbot';
+import { formatMessage } from '@/libs/formatting';
+// import { processResponseForDisplay } from '@/libs/formatting';
+
+  // Create a component to render formatted messages
+const FormattedMessage: React.FC<{ content: string }> = ({ content }) => {
+    return (
+      <div 
+        dangerouslySetInnerHTML={{ 
+          __html: formatMessage(content) 
+        }} 
+      />
+    );
+  };
 
 const ChatComponent: React.FC<ChatComponentProps> = ({ onClose, isWaitlistOpen }) => {
   const [messages, setMessages] = useState<Message[]>([{
@@ -61,11 +74,22 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ onClose, isWaitlistOpen }
 
     document.addEventListener('keypress', handleKeyPress);
     return () => document.removeEventListener('keypress', handleKeyPress);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim() || isLoading) return;
+
+    if(inputValue.split(" ").length<=2){
+      addMessage({
+        id: Date.now().toString(),
+        role: 'bot',
+        content: "Please type a longer question",
+        timestamp: new Date()
+      });
+      return
+    }
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -86,7 +110,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ onClose, isWaitlistOpen }
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          query: conversationalElements,
+          query: conversationalElements+" Role Enhancement: "+enhanceContextForRole(selectedRole as string),
           role: selectedRole
         })
       });
@@ -96,7 +120,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ onClose, isWaitlistOpen }
       }
 
       const data = await response.json();
-      
+      // const formatedResponse = processResponseForDisplay(data.response)
       addMessage({
         id: Date.now().toString(),
         role: 'bot',
@@ -184,7 +208,8 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ onClose, isWaitlistOpen }
                   </div>
                 </>
               ) : (
-                <p className="whitespace-pre-wrap">{message.content}</p>
+                
+                <div className="whitespace-pre-wrap"><FormattedMessage content={message.content} /></div>
               )}
             </div>
           </div>
