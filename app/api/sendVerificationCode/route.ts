@@ -3,15 +3,15 @@ import { generateVerificationCode } from '@/libs/codeUtils';
 import { storeVerificationCode } from '@/libs/waitlist';
 import { findUserByEmailOrPhone } from '@/libs/waitlist';
 import { setupDatabase } from '@/db/setup';
-// import { sendVerificationEmail } from '@/libs/sendEmail';
-// import { sendSMS } from '@/libs/sendSms';
+import { sendVerificationEmail } from '@/libs/sendEmail';
+import { sendSMS } from '@/libs/sendSms';
 
 
 export async function POST(req: Request) {
     
     try {
         await setupDatabase();
-        const { email, phone } = await req.json();
+        const { email, phone, preferredContact } = await req.json();
 
         // Validate that at least one of email or phone is provided
         if (!email && !phone) {
@@ -37,12 +37,11 @@ export async function POST(req: Request) {
         // Store the verification code temporarily (you may use Redis or your DB)
         await storeVerificationCode(verificationCode);
 
-        // Uncomment and use your actual email or SMS service to send the verification code
-        // if (email) {
-        //     await sendVerificationEmail(email, verificationCode);
-        // } else if (phone) {
-        //     await sendSMS(phone, verificationCode);
-        // }
+        if (preferredContact === 'email') {
+            await sendVerificationEmail(email, verificationCode);
+        } else if (preferredContact === 'phone') {
+            await sendSMS(phone, verificationCode);
+        }
 
         console.log(`Verification Code: ${verificationCode}`);
 

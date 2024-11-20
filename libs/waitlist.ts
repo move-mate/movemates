@@ -2,8 +2,19 @@
 import { getPool } from "@/db/setup";
 import { createClient } from '@redis/client';
 
+// Use environment variables for Redis connection in production
+const redisHost = process.env.REDIS_HOST || 'localhost';
+const redisPort = parseInt(process.env.REDIS_PORT || '6379');
+const redisPassword = process.env.REDIS_PASSWORD || '';
 
-const client = createClient();
+const client = createClient({
+  socket: {
+    host: redisHost,
+    port: redisPort
+  },
+  password: redisPassword || undefined
+});
+
 
 // Connect Redis client on initialization
 client.connect().catch((err) => {
@@ -13,12 +24,9 @@ client.connect().catch((err) => {
 export const addToWaitlist = async ({ name, email, phone, type, province, city }: { name: string; email: string; phone: string; type: string; province: string; city: string }) => {
   const pool = getPool();
   
-  // Log waitlist data to verify
-  console.log('Adding to waitlist with data:', name, email, phone, type, province, city);
-
   const result = await pool.query(
-    `INSERT INTO waitlist (name, email, phone, phone, type, province, city)
-     VALUES ($1, $2, $3, $4, $5, $6, $6)
+    `INSERT INTO waitlist (name, email, phone, type, province, city)
+     VALUES ($1, $2, $3, $4, $5, $6)
      RETURNING *`,
     [name, email, phone, type, province, city]
   );
@@ -74,3 +82,4 @@ export async function verifyStoredCode(code: string): Promise<boolean> {
   const result = await client.get('verificationCode');
   return result === code;
 }
+
