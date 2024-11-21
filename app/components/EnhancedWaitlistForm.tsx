@@ -249,7 +249,7 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-center mb-4">
               {formData.type === 'customer' 
-                ? "Do you live in Gauteng, Durban, or Cape Town and want to be among the first to access our services?"
+                ? "Do you live in Gauteng, KwaZulu Natal or Western Cape and want to be among the first to access our services?"
                 : formData.type === 'driver'
                 ? "Are you a driver in Gauteng, Durban, or Cape Town looking to join our network of trusted movers?"
                 : "Are you a business in Gauteng, Durban, or Cape Town looking for reliable moving solutions?"}
