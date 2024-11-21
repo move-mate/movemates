@@ -25,6 +25,7 @@ export const setupDatabase = async (): Promise<void> => {
         email VARCHAR(255) UNIQUE NOT NULL,
         phone VARCHAR(10) UNIQUE NOT NULL,
         type VARCHAR(50) CHECK (type IN ('customer', 'driver', 'business')) NOT NULL,
+        social VARCHAR(20) CHECK (social IN ('facebook', 'twitter', 'instagram', 'linkedin')) NOT NULL,
         province VARCHAR(100) NOT NULL,
         city VARCHAR(100) NOT NULL,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP

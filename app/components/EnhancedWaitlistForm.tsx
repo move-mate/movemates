@@ -12,6 +12,7 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
     name: '',
     email: '',
     phone: '',
+    social: '',
     type: 'customer',
     province: '',
     city: '',
@@ -109,6 +110,7 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
               </div>
             </div>
 
+            {/* Join as section */}
             <div>
               <h3 className="text-xl mb-4">Join as</h3>
               <div className="flex flex-wrap gap-4">
@@ -148,6 +150,59 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
               </div>
             </div>
 
+            {/* Where did you hear about us - Socials Section */}
+            <div>
+              <h3 className="text-xl mb-4">Where did you hear about us?</h3>
+              <div className="flex flex-wrap gap-2">
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="social"
+                    value="facebook"
+                    checked={formData.social === 'facebook'}
+                    onChange={handleChange}
+                    className="mr-2"
+                  />
+                  Facebook
+                </label>
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="social"
+                    value="twitter"
+                    checked={formData.social === 'twitter'}
+                    onChange={handleChange}
+                    className="mr-2"
+                  />
+                  Twitter
+                </label>
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="social"
+                    value="instagram"
+                    checked={formData.social === 'instagram'}
+                    onChange={handleChange}
+                    className="mr-2"
+                  />
+                  Instagram
+                </label>
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="social"
+                    value="linkedin"
+                    checked={formData.social === 'linkedin'}
+                    onChange={handleChange}
+                    className="mr-2"
+                  />
+                  LinkedIn
+                </label>
+              </div>
+            </div>
+
+
+            {/* Location Section */}
             <div className="space-y-4">
               <select
                 name="province"
@@ -162,18 +217,15 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
                 <option value="kwazulu-natal">KwaZulu-Natal</option>
               </select>
 
-              <select
+              <input
+                type="text"
                 name="city"
                 value={formData.city}
                 onChange={handleChange}
                 className="w-full p-3 rounded bg-white text-black"
+                placeholder="Enter your city"
                 required
-              >
-                <option value="">Select your city</option>
-                <option value="johannesburg">Johannesburg</option>
-                <option value="cape-town">Cape Town</option>
-                <option value="durban">Durban</option>
-              </select>
+              />
             </div>
 
             <button

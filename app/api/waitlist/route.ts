@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { addToWaitlist } from '@/libs/waitlist';
+import { setupDatabase } from '@/db/setup';
 
 // Manual validation function (since Express-validator is not available)
 const validateWaitlist = (body: { name: string; email: string; phone: string; type: string; province: string; city: string }) => {
@@ -28,6 +29,8 @@ const validateWaitlist = (body: { name: string; email: string; phone: string; ty
 };
 
 export async function POST(request: NextRequest) {
+  await setupDatabase();
+
   const body = await request.json();
   
   // Validate the incoming data
