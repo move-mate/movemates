@@ -5,6 +5,9 @@ import EnhancedWaitlistForm from './components/EnhancedWaitlistForm';
 import Navbar from './components/Navbar';
 import ChatComponent from './components/ChatComponent';
 import Image from 'next/image';
+import Script from 'next/script';
+
+
 
 
 function App() {
@@ -24,6 +27,24 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white text-black">
+      {/* Google Analytics script with next/script */}
+      <Script 
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=G-ZL776P76PN" 
+        async 
+      />
+      <Script 
+        strategy="afterInteractive"
+        id="google-analytics"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-ZL776P76PN');
+          `
+        }} 
+      />
       <Navbar 
         onWaitlistClick={() => setShowWaitlist(true)} 
         showChat={showChat} 
