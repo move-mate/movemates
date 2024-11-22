@@ -1,7 +1,7 @@
 import { Message } from "@/app/types/chat";
 export function enhanceContextForRole(role: string): string|null {
     const roleContext = {
-      mover: "Remember you're speaking to a mover who's interested in finding work and connecting with customers. Focus on opportunities, requirements, and how MoveMates can help them succeed.",
+      mover: "Remember you're speaking to a mover who's interested in finding vehicles that can help them move from one place to another",
       business: "You're speaking to a business owner interested in shipping or moving services. Focus on logistics solutions, business benefits, and how MoveMates can help their operations.",
       driver: "You're speaking to a driver interested in delivery opportunities. Focus on route flexibility, earning potential, and how MoveMates can support their driving career."
     }[role] || "";
