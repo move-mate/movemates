@@ -6,6 +6,8 @@ import Navbar from './components/Navbar';
 import ChatComponent from './components/ChatComponent';
 import Image from 'next/image';
 import Script from 'next/script';
+import Footer from './components/Footer';
+
 
 function App() {
   const [showWaitlist, setShowWaitlist] = useState(false);
@@ -116,9 +118,7 @@ function App() {
         <EnhancedWaitlistForm onClose={() => setShowWaitlist(false)} />
       )}
 
-      <footer className="container mx-auto px-4 py-6 text-center">
-        <p>&copy; 2024 MoveMates. All rights reserved.</p>
-      </footer>
+      <Footer />
     </div>
   );
 }
