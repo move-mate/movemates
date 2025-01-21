@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { addToWaitlist } from '@/libs/waitlist';
-import { setupDatabase } from '@/db/setup';
 
 // Manual validation function (since Express-validator is not available)
 const validateWaitlist = (body: { name: string; email: string; phone: string; type: string; province: string; city: string }) => {
@@ -29,8 +28,6 @@ const validateWaitlist = (body: { name: string; email: string; phone: string; ty
 };
 
 export async function POST(request: NextRequest) {
-  await setupDatabase();
-
   const body = await request.json();
   
   // Validate the incoming data
@@ -41,10 +38,10 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const result = await addToWaitlist(body);  // Calls the function from your `libs/waitlist.ts`
+    const result = await addToWaitlist(body);
     return NextResponse.json({ message: 'Added to waitlist', data: result }, { status: 201 });
-  } catch (error) {
-    if ((error as any).code === '23505') {
+  } catch (error: any) {
+    if (error.code === '23505') {
       return NextResponse.json({ error: 'Email already exists in waitlist' }, { status: 409 });
     } else {
       console.error('Error adding to waitlist:', error);

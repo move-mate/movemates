@@ -7,9 +7,6 @@ import ChatComponent from './components/ChatComponent';
 import Image from 'next/image';
 import Script from 'next/script';
 
-
-
-
 function App() {
   const [showWaitlist, setShowWaitlist] = useState(false);
   const [showChat, setShowChat] = useState(false);
