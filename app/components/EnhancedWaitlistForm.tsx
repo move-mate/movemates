@@ -7,8 +7,18 @@ interface EnhancedWaitlistFormProps {
   onClose: () => void;
 }
 
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  social: string;
+  type: 'customer' | 'driver' | 'business';
+  province: string;
+  city: string;
+}
+
 const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     phone: '',
@@ -18,18 +28,69 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
     city: '',
   });
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [submitError, setSubmitError] = useState('');
+
+  const validateForm = (): boolean => {
+    const newErrors: Partial<FormData> = {};
+    
+    // Name validation
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+    } else if (formData.name.trim().split(' ').length < 2) {
+      newErrors.name = 'Please enter both name and surname';
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email) {
+      newErrors.email = 'Email is required';
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    // Phone validation - basic South African format
+    const phoneRegex = /^(?:\+27|0)[6-8][0-9]{8}$/;
+    if (!formData.phone) {
+      newErrors.phone = 'Phone number is required';
+    } else if (!phoneRegex.test(formData.phone)) {
+      newErrors.phone = 'Please enter a valid South African phone number';
+    }
+
+    // Social validation
+    if (!formData.social) {
+      newErrors.social = 'Please select where you heard about us';
+    }
+
+    // Province validation
+    if (!formData.province) {
+      newErrors.province = 'Please select your province';
+    }
+
+    // City validation
+    if (!formData.city.trim()) {
+      newErrors.city = 'City is required';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear error for the field being changed
+    setErrors(prev => ({ ...prev, [name]: '' }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setSubmitError('');
+
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://movemates.co.za';
       const response = await fetch(`${baseUrl}/api/waitlist`, {
@@ -40,15 +101,22 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
         body: JSON.stringify(formData),
       });
       
+      const data = await response.json();
+      
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to join waitlist');
+        throw new Error(data.error || 'Failed to join waitlist');
       }
       
       setSubmitted(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setSubmitError(err instanceof Error ? err.message : 'An error occurred');
     }
+  };
+
+  const renderFieldError = (fieldName: keyof FormData) => {
+    return errors[fieldName] ? (
+      <p className="text-red-500 text-sm mt-1">{errors[fieldName]}</p>
+    ) : null;
   };
 
   if (submitted) {
@@ -57,7 +125,7 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
         <div className="bg-white rounded-xl shadow-xl p-8 max-w-md text-center">
           <h2 className="text-2xl font-bold mb-4">Thank you for joining the waitlist!</h2>
           <p className="text-gray-700 mb-4">
-            We have received your information. We`ll be in touch soon with the latest updates.
+            We have received your information. We'll be in touch soon with the latest updates.
           </p>
           <button
             onClick={onClose}
@@ -85,28 +153,39 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
                 placeholder="Name and Surname"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full p-3 rounded bg-white text-black"
-                required
+                className={`w-full p-3 rounded bg-white text-black ${
+                  errors.name ? 'border-2 border-red-500' : ''
+                }`}
               />
+              {renderFieldError('name')}
+              
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="p-3 rounded bg-white text-black"
-                  required
-                />
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="Phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="p-3 rounded bg-white text-black"
-                  required
-                />
+                <div>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={`w-full p-3 rounded bg-white text-black ${
+                      errors.email ? 'border-2 border-red-500' : ''
+                    }`}
+                  />
+                  {renderFieldError('email')}
+                </div>
+                <div>
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="Phone (e.g., 0721234567)"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className={`w-full p-3 rounded bg-white text-black ${
+                      errors.phone ? 'border-2 border-red-500' : ''
+                    }`}
+                  />
+                  {renderFieldError('phone')}
+                </div>
               </div>
             </div>
 
@@ -114,39 +193,19 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
             <div>
               <h3 className="text-xl mb-4">Join as</h3>
               <div className="flex flex-wrap gap-4">
-                <label className="inline-flex items-center">
-                  <input
-                    type="radio"
-                    name="type"
-                    value="customer"
-                    checked={formData.type === 'customer'}
-                    onChange={handleChange}
-                    className="mr-2"
-                  />
-                  Customer
-                </label>
-                <label className="inline-flex items-center">
-                  <input
-                    type="radio"
-                    name="type"
-                    value="driver"
-                    checked={formData.type === 'driver'}
-                    onChange={handleChange}
-                    className="mr-2"
-                  />
-                  Driver
-                </label>
-                <label className="inline-flex items-center">
-                  <input
-                    type="radio"
-                    name="type"
-                    value="business"
-                    checked={formData.type === 'business'}
-                    onChange={handleChange}
-                    className="mr-2"
-                  />
-                  Business
-                </label>
+                {['customer', 'driver', 'business'].map((type) => (
+                  <label key={type} className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      name="type"
+                      value={type}
+                      checked={formData.type === type}
+                      onChange={handleChange}
+                      className="mr-2"
+                    />
+                    {type.charAt(0).toUpperCase() + type.slice(1)}
+                  </label>
+                ))}
               </div>
             </div>
 
@@ -154,78 +213,55 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
             <div>
               <h3 className="text-xl mb-4">Where did you hear about us?</h3>
               <div className="flex flex-wrap gap-2">
-                <label className="inline-flex items-center">
-                  <input
-                    type="radio"
-                    name="social"
-                    value="facebook"
-                    checked={formData.social === 'facebook'}
-                    onChange={handleChange}
-                    className="mr-2"
-                  />
-                  Facebook
-                </label>
-                <label className="inline-flex items-center">
-                  <input
-                    type="radio"
-                    name="social"
-                    value="twitter"
-                    checked={formData.social === 'twitter'}
-                    onChange={handleChange}
-                    className="mr-2"
-                  />
-                  Twitter
-                </label>
-                <label className="inline-flex items-center">
-                  <input
-                    type="radio"
-                    name="social"
-                    value="instagram"
-                    checked={formData.social === 'instagram'}
-                    onChange={handleChange}
-                    className="mr-2"
-                  />
-                  Instagram
-                </label>
-                <label className="inline-flex items-center">
-                  <input
-                    type="radio"
-                    name="social"
-                    value="linkedin"
-                    checked={formData.social === 'linkedin'}
-                    onChange={handleChange}
-                    className="mr-2"
-                  />
-                  LinkedIn
-                </label>
+                {['facebook', 'twitter', 'instagram', 'linkedin'].map((platform) => (
+                  <label key={platform} className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      name="social"
+                      value={platform}
+                      checked={formData.social === platform}
+                      onChange={handleChange}
+                      className="mr-2"
+                    />
+                    {platform.charAt(0).toUpperCase() + platform.slice(1)}
+                  </label>
+                ))}
               </div>
+              {renderFieldError('social')}
             </div>
-
 
             {/* Location Section */}
             <div className="space-y-4">
-              <select
-                name="province"
-                value={formData.province}
-                onChange={handleChange}
-                className="w-full p-3 rounded bg-white text-black"
-                required
-              >
-                <option value="">Select your province</option>
-                <option value="gauteng">Gauteng</option>
-                <option value="western-cape">Western Cape</option>
-                <option value="kwazulu-natal">KwaZulu-Natal</option>
-              </select>
+              <div>
+                <select
+                  name="province"
+                  value={formData.province}
+                  onChange={handleChange}
+                  className={`w-full p-3 rounded bg-white text-black ${
+                    errors.province ? 'border-2 border-red-500' : ''
+                  }`}
+                >
+                  <option value="">Select your province</option>
+                  <option value="gauteng">Gauteng</option>
+                  <option value="western-cape">Western Cape</option>
+                  <option value="kwazulu-natal">KwaZulu-Natal</option>
+                </select>
+                {renderFieldError('province')}
+              </div>
 
-              <input
-                type="text"
-                name="city"
-                value={formData.city}
-                onChange={handleChange}
-                className="w-full p-3 rounded bg-white text-black"
-                placeholder="Enter your city"
-                required
-              />
+              <div>
+                <input
+                  type="text"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleChange}
+                  className={`w-full p-3 rounded bg-white text-black ${
+                    errors.city ? 'border-2 border-red-500' : ''
+                  }`}
+                  placeholder="Enter your city"
+                />
+                {renderFieldError('city')}
+              </div>
             </div>
 
             <button
@@ -234,7 +270,9 @@ const EnhancedWaitlistForm: React.FC<EnhancedWaitlistFormProps> = ({ onClose }) 
             >
               Join Waiting List
             </button>
-            {error && <p className="text-red-500 mt-2">{error}</p>}
+            {submitError && (
+              <p className="text-red-500 mt-2 text-center">{submitError}</p>
+            )}
           </form>
         </div>
 
