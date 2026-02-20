@@ -1,42 +1,30 @@
+import { Button } from "./ui/button";
+
 interface NavbarProps {
   onWaitlistClick: () => void;
-  showChat: boolean;
-  setShowChat: (show: boolean) => void;
 }
 
-function Navbar({ onWaitlistClick, showChat, setShowChat }: NavbarProps) {
+export default function Navbar({ onWaitlistClick }: NavbarProps) {
   return (
-    <header className="bg-[#fff] w-full px-6 py-3 flex justify-between items-center">
-      <div className="flex items-center">
-        <span className="text-2xl font-bold text-[#081427]">MoveMates</span>
+    <header className="sticky top-0 z-50 w-full transition-all duration-300">
+      <div className="max-w-5xl mx-auto px-6 lg:px-0 py-4 flex justify-between items-center">
+        <div className="flex items-center group cursor-pointer">
+          <span className="text-2xl font-bold text-secondary tracking-tight">
+            Move<span className="text-primary">Mates</span>
+          </span>
+        </div>
+
+        <nav className="flex items-center gap-6">
+          <Button
+            onClick={onWaitlistClick}
+            size="sm"
+            variant="secondary"
+            className="bg-gray-500 text-white hover:text-secondary"
+          >
+            Start here
+          </Button>
+        </nav>
       </div>
-      <nav>
-        {!showChat ? (
-          <>
-            <button 
-              onClick={onWaitlistClick}
-              className="hidden md:block bg-[#FE6912] text-white px-4 py-2 rounded-full hover:bg-opacity-90 transition duration-300"
-            >
-              Join Waitlist
-            </button>
-            <div 
-              className="md:hidden flex items-center gap-3 cursor-pointer" 
-              onClick={() => setShowChat(true)}
-            >
-              <div className="bg-white rounded-full shadow-lg px-4 py-2">
-                <p className="text-gray-700">Chat with<br/> our Assistant</p>
-              </div>
-              <img 
-                src="/assets/images/bot.png" 
-                alt="Chat Assistant" 
-                className="w-12 h-12 rounded-full object-cover border-2 border-[#FE6912] shadow-lg animate-bounce"
-              />
-            </div>
-          </>
-        ) : null}
-      </nav>
     </header>
   );
 }
-
-export default Navbar;

@@ -33,7 +33,7 @@ export class ChatError extends Error {
 }
 
 export interface ChatContext {
-  role: 'mover' | 'business' | 'driver';
+  role: 'mover' | 'driver';
   previousMessages: Message[];
   query: string;
   context: string;

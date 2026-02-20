@@ -8,9 +8,17 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
+     colors: {
+        primary: "var(--primary)",
+        secondary: "var(--secondary)",
         background: "var(--background)",
         foreground: "var(--foreground)",
+        overlay: "var(--overlay)",
+        "light-black": "var(--light-black)",
+        "overall-background": "var(--overall-background)",
+      },
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
       },
     },
   },

@@ -3,19 +3,56 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  --background: #081427; /* Dark background */
   --foreground: #171717;
+  --primary: #fe6912; /* Primary color */
+  --secondary: #081427; /* Secondary color */
+  --overlay: rgba(8, 20, 39, 0.7); /* Overlay color */
+  --light-black: #4a4a4a; /* Light black for step labels */
+  --white: #ffffff; /* White color */
+  --overall-background: #f3f4f6;
+  --fonts: #ffffff; /* Default font color */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #081427;
+    --primary: #fe6912;
+    --fonts: #ffffff;
   }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: #1a1a1a;
+  background: var(--overall-background);
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+
+*:focus-visible {
+  outline: none !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #081427 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
