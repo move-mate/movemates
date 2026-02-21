@@ -1,23 +1,17 @@
-'use client'
-import { useState } from 'react';
-import SkeletonPhone from './components/SkeletonPhone';
-import EnhancedWaitlistForm from './components/EnhancedWaitlistForm';
-import Navbar from './components/Navbar';
-import ChatComponent from './components/ChatComponent';
-import Image from 'next/image';
-import Script from 'next/script';
-import Footer from './components/Footer';
+"use client";
+import { useState } from "react";
+import EnhancedWaitlistForm from "./components/EnhancedWaitlistForm";
+import Navbar from "./components/Navbar";
+import ChatComponent from "./components/ChatComponent";
+import Image from "next/image";
+import Footer from "./components/Footer";
+import { MessageSquare } from "lucide-react";
+import { Button } from "./components/ui/button";
 
-
-function App() {
+export default function App() {
   const [showWaitlist, setShowWaitlist] = useState(false);
   const [showChat, setShowChat] = useState(false);
   const [showMainContent, setShowMainContent] = useState(true);
-
-  const handleChatOpen = () => {
-    setShowChat(true);
-    setShowMainContent(false);
-  };
 
   const handleChatClose = () => {
     setShowChat(false);
@@ -25,91 +19,77 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-black">
-      {/* Google Analytics script with next/script */}
-      <Script 
-        strategy="afterInteractive"
-        src="https://www.googletagmanager.com/gtag/js?id=G-ZL776P76PN" 
-        async 
-      />
-      <Script 
-        strategy="afterInteractive"
-        id="google-analytics"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-ZL776P76PN');
-          `
-        }} 
-      />
-      <Navbar 
-        onWaitlistClick={() => setShowWaitlist(true)} 
-        showChat={showChat} 
-        setShowChat={handleChatOpen} 
-      />
-      
+    <div className="h-screen max-h-screen text-secondary relative overflow-hidden flex flex-col">
+      <div className="absolute inset-x-0 bottom-0 h-[10vh] md:h-[20vh] lg:h-[40vh] z-0 pointer-events-none">
+        <Image
+          src="/assets/images/pack.jpg"
+          alt="Packing background"
+          fill
+          className="object-cover object-top rounded-t-3xl px-1"
+          priority
+        />
+      </div>
+
+      <div className="relative z-20">
+        <Navbar onWaitlistClick={() => setShowWaitlist(true)} />
+      </div>
+
       {!showWaitlist && showMainContent && (
-        <main className="container mx-auto px-4 py-8 md:py-16">
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center min-h-[600px]">
-            <div className="text-left mt-4 md:mt-0">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 md:mb-8 text-[#081427] relative">
-                Moving with<br />Complete Control
-                <Image 
-                  src="/assets/svg/underline.svg" 
-                  alt="Underline" 
-                  className="absolute -bottom-4 right-15 w-36 md:w-48"
-                  width={144} 
-                  height={36}
-                />
+        <main className="container mx-auto px-6 py-4 lg:py-8 max-w-7xl flex-grow flex flex-col pt-24 relative z-10 transition-all duration-500 ease-in-out">
+          <section className="flex flex-col items-center justify-center w-full mt-8 lg:mt-0">
+            <div className="flex flex-col items-center text-center space-y-8 max-w-5xl">
+              <h1 className="text-5xl lg:text-7xl font-extrabold text-[#081427] leading-[1.1] tracking-tight relative">
+                Moving with
+                <br />
+                <span className="relative inline-block mt-2">
+                  Complete Control
+                </span>
               </h1>
-              <p className="text-lg md:text-xl mb-8 md:mb-12 text-black">
-                Your last-mile moving solution, designed for seamless 
-                <br className="hidden md:block"/> relocations from a single item to an entire office.
-                <br className="hidden md:block"/> Trusted, tech-enabled, and stress-free.
+              <p className="text-lg lg:text-xl text-gray-500 leading-relaxed font-medium">
+                Your last-mile moving solution, designed for seamless
+                relocations from a single item to an entire office. <br />
+                Trusted, tech-enabled, and stress-free.
               </p>
-              {!showChat && (
-                <button
+
+              <div className="pt-2 flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
+                <Button
                   onClick={() => setShowWaitlist(true)}
-                  className="bg-[#FE6912] text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-[#FF8A47] transition duration-300 inline-flex items-center md:block"
+                  size="lg"
+                  className="hover:shadow-[0_8px_30px_rgb(254,105,18,0.3)] transition-all duration-300 ease-out transform hover:-translate-y-1 flex items-center justify-center border border-transparent focus:ring-4 focus:ring-[#FE6912]/30 focus:outline-none"
                 >
-                  Get Early Access
-                  {/* <ChevronRight className="ml-2" /> */}
-                </button>
-              )}
-            </div>
-            {!showChat && (
-              <div className="hidden md:flex justify-center -mt-32">
-                <SkeletonPhone />
+                  <span>Join the Waitlist</span>
+                </Button>
               </div>
-            )}
+            </div>
           </section>
         </main>
       )}
 
-      {/* Chat component - handles both mobile and desktop */}
-      <div className={`${
-        showChat 
-          ? 'fixed inset-0 z-50 flex items-start justify-center pt-2 px-4 md:fixed md:inset-auto md:bottom-4 md:right-4 md:pt-0 md:px-0' 
-          : 'fixed bottom-4 right-4 z-0 md:block hidden'
-      }`}>
+      <div
+        className={`${
+          showChat
+            ? "fixed inset-0 z-50 flex items-start justify-center pt-2 px-4 md:fixed md:inset-auto md:bottom-6 md:right-6 md:pt-0 md:px-0"
+            : "fixed bottom-8 right-8 z-40"
+        } transition-all duration-300 ease-in-out`}
+      >
         {showChat ? (
-          <div className="w-full max-w-[450px]">
-            <ChatComponent onClose={handleChatClose} isWaitlistOpen={showWaitlist} />
+          <div className="w-full max-w-[450px] shadow-2xl rounded-2xl overflow-hidden ring-1 ring-black/5 transform transition-all duration-300 scale-100 origin-bottom-right bg-white">
+            <ChatComponent
+              onClose={handleChatClose}
+              isWaitlistOpen={showWaitlist}
+            />
           </div>
         ) : (
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setShowChat(true)}>
-            <div className="bg-white rounded-full shadow-lg px-4 py-2">
-              <p className="text-gray-700">Chat with<br/> our Assistant</p>
+          <div
+            className="flex items-center gap-4 cursor-pointer group"
+            onClick={() => setShowChat(true)}
+          >
+            <div className="relative bg-[#FE6912] p-4 rounded-full hover:scale-110 transition-transform duration-300">
+              <MessageSquare
+                className="text-white hover:scale-110 transition-transform duration-300"
+                size={24}
+              />
             </div>
-            <Image 
-              src="/assets/images/bot.png" 
-              alt="Chat Assistant" 
-              className="rounded-full object-cover border-2 border-[#FE6912] shadow-lg animate-bounce"
-              width={48}  // Assuming 3rem (48px) for width
-              height={48} // Assuming 3rem (48px) for height
-            />
           </div>
         )}
       </div>
@@ -122,5 +102,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
