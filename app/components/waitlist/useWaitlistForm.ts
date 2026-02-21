@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { FormData, FormErrors, waitlistSchema } from "./types";
+import { FormErrors } from "./types";
+import { waitlistSchema, FormData } from "@/schema/schema";
 
 export function useWaitlistForm() {
   const [formData, setFormData] = useState<FormData>({
@@ -86,9 +87,12 @@ export function useWaitlistForm() {
 
     setIsSubmitting(true);
     try {
-      const baseUrl =
-        process.env.NEXT_PUBLIC_API_BASE_URL || "https://movemates.co.za";
-      const response = await fetch(`${baseUrl}/api/waitlist`, {
+      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.trim();
+      const waitlistUrl = baseUrl
+        ? `${baseUrl.replace(/\/$/, "")}/api/waitlist`
+        : "/api/waitlist";
+
+      const response = await fetch(waitlistUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -96,10 +100,22 @@ export function useWaitlistForm() {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to join waitlist");
+        if (response.status === 409) {
+          setStep(1);
+          setErrors((prev) => ({
+            ...prev,
+            email: "This email already exists on the waitlist.",
+          }));
+          return;
+        }
+
+        const apiError =
+          data?.error ||
+          (Array.isArray(data?.errors) ? data.errors.join(", ") : undefined);
+        throw new Error(apiError || "Failed to join waitlist");
       }
 
       setSubmitted(true);

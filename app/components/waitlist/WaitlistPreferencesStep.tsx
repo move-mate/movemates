@@ -4,7 +4,7 @@ import { SelectField, SelectItem } from "../ui/select";
 import { WaitlistStepProps } from "./types";
 
 interface ExtendedWaitlistStepProps extends WaitlistStepProps {
-  onTypeSelect: (type: "customer" | "driver" | "business") => void;
+  onTypeSelect: (type: "customer" | "driver") => void;
 }
 
 export function WaitlistPreferencesStep({
@@ -19,7 +19,7 @@ export function WaitlistPreferencesStep({
           Joining as
         </label>
         <div className="grid grid-cols-1 gap-3">
-          {[
+          {([
             {
               id: "customer",
               label: "A Customer",
@@ -30,11 +30,11 @@ export function WaitlistPreferencesStep({
               label: "A Partner",
               desc: "I have a vehicle to move items",
             },
-          ].map((t) => (
+          ] as const).map((t) => (
             <button
               key={t.id}
               type="button"
-              onClick={() => onTypeSelect(t.id as any)}
+              onClick={() => onTypeSelect(t.id)}
               className={cn(
                 "flex flex-col items-start p-4 rounded-xl border-2 transition-all text-left outline-none focus:outline-none focus:ring-0 focus:ring-transparent select-none",
                 formData.type === t.id
