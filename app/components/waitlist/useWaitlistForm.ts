@@ -88,9 +88,18 @@ export function useWaitlistForm() {
     setIsSubmitting(true);
     try {
       const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.trim();
-      const waitlistUrl = baseUrl
-        ? `${baseUrl.replace(/\/$/, "")}/api/waitlist`
-        : "/api/waitlist";
+      let waitlistUrl = "/api/waitlist";
+
+      if (baseUrl && typeof window !== "undefined") {
+        try {
+          const parsedBaseUrl = new URL(baseUrl, window.location.origin);
+          if (parsedBaseUrl.origin === window.location.origin) {
+            waitlistUrl = `${parsedBaseUrl.origin}/api/waitlist`;
+          }
+        } catch {
+          waitlistUrl = "/api/waitlist";
+        }
+      }
 
       const response = await fetch(waitlistUrl, {
         method: "POST",

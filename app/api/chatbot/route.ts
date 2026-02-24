@@ -4,6 +4,7 @@ import { headers } from 'next/headers';
 import { mistral } from "@ai-sdk/mistral";
 import { cosineSimilarity, embed, embedMany, generateText } from "ai";
 import { EmbeddingDocument } from '@/app/types/chat';
+import { corsHeaders } from '@/libs/cors';
 
 // In-memory cache (note: this will reset on each cold start)
 let embeddingsCache: {
@@ -69,13 +70,15 @@ async function getEmbeddings(): Promise<EmbeddingDocument[]> {
 }
 
 export async function POST(request: Request) {
+  const cors = corsHeaders(request);
+
   try {
     const { query, role } = await request.json();
 
     if (!query?.trim()) {
       return NextResponse.json(
         { error: 'Query is required' },
-        { status: 400 }
+        { status: 400, headers: cors }
       );
     }
 
@@ -142,13 +145,20 @@ export async function POST(request: Request) {
         Response:`,
     });
 
-    return NextResponse.json({ response: text });
+    return NextResponse.json({ response: text }, { headers: cors });
     
   } catch (error) {
     console.error('Error in chat endpoint:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
-      { status: 500 }
+      { status: 500, headers: cors }
     );
   }
+}
+
+export async function OPTIONS(request: Request) {
+  return new NextResponse(null, {
+    status: 204,
+    headers: corsHeaders(request),
+  });
 }
